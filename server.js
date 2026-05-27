@@ -91,8 +91,8 @@ wss.on('connection', (ws) => {
       ws.role = 'guest';
 
       send(ws, { type: 'lobby_joined', code });
-      // Tell host guest arrived
-      send(lobby.host, { type: 'guest_joined', guestName: msg.playerName || 'Guest' });
+      // Tell host guest arrived, relay their chosen character
+      send(lobby.host, { type: 'guest_joined', guestName: msg.playerName || 'Guest', guestChar: msg.guestChar || 'nasrat' });
       console.log(`Guest joined lobby: ${code}`);
     }
 
