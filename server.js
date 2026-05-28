@@ -129,6 +129,14 @@ wss.on('connection', (ws) => {
     }
 
     // ── SKILL USE ─────────────────────────────────────────────
+    else if (type === 'match_over') {
+      // Host tells guest the game ended
+      const lobby = lobbies.get(ws.lobbyCode);
+      if (!lobby || ws.role !== 'host') return;
+      lobby.lastActivity = Date.now();
+      broadcast(lobby, { type: 'match_over', winnerText: msg.winnerText }, ws);
+    }
+
     else if (type === 'skill_use') {
       const lobby = lobbies.get(ws.lobbyCode);
       if (!lobby) return;
